@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+//https://medium.com/anna-coding/the-way-to-check-if-its-the-first-time-for-useeffect-function-is-being-run-in-react-hooks-170520554067
+
+import React, { useState, useEffect, useRef } from "react";
+import "./App.css";
 
 function App() {
+  const [quote, setQuote] = useState();
+  const firstQuote = useRef(true);
+
+  const getQuote = () => {
+    fetch("https://ron-swanson-quotes.herokuapp.com/v2/quotes")
+      .then((response) => response.json())
+      .then((data) => setQuote(data));
+  };
+
+  useEffect(() => {
+    if (firstQuote.current) {
+      getQuote("https://hn.algolia.com/api/v1/search?query=React");
+      firstQuote.current = false;
+    }
+
+    const interval = setInterval(() => {
+      getQuote("https://hn.algolia.com/api/v1/search?query=React");
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>
+        <a href="/instructions.html"> instructions </a>
+      </h1>
+      <img
+        src="https://media.giphy.com/media/tSVnUxoWoHC/giphy.gif"
+        alt="ron"
+      />
+      <p>{quote}</p>
     </div>
   );
 }
