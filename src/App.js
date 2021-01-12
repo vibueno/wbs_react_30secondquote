@@ -15,20 +15,22 @@ function App() {
 
   useEffect(() => {
     if (firstQuote.current) {
-      getQuote("https://hn.algolia.com/api/v1/search?query=React");
+      getQuote();
       firstQuote.current = false;
     }
 
     const interval = setInterval(() => {
-      getQuote("https://hn.algolia.com/api/v1/search?query=React");
-    }, 5000);
+      getQuote();
+    }, 30000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="App">
       <h1>
-        <a href="/instructions.html"> instructions </a>
+        {/*process.env.PUBLIC_URL is needed since for some reason webpack is not
+        working*/}
+        <a href={process.env.PUBLIC_URL + "/instructions.html"}>instructions</a>
       </h1>
       <img
         src="https://media.giphy.com/media/tSVnUxoWoHC/giphy.gif"
