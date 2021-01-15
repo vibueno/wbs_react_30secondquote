@@ -15,6 +15,11 @@ function App() {
   };
 
   useEffect(() => {
+    /*This 'if' may not be needed. You may just call getQuote here
+    and it will be called only the first time.
+
+    Still good to know refs can be used for this purpose.
+    */
     if (firstQuote.current) {
       getQuote();
       firstQuote.current = false;
