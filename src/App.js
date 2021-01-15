@@ -10,7 +10,8 @@ function App() {
   const getQuote = () => {
     fetch("https://ron-swanson-quotes.herokuapp.com/v2/quotes")
       .then((response) => response.json())
-      .then((data) => setQuote(data));
+      .then((data) => setQuote(data))
+      .catch((error) => console.error(error));
   };
 
   useEffect(() => {
@@ -36,7 +37,7 @@ function App() {
         src="https://media.giphy.com/media/tSVnUxoWoHC/giphy.gif"
         alt="ron"
       />
-      <p>{quote}</p>
+      <p>(quote)?{quote}:null</p>
     </div>
   );
 }
